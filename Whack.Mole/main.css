@@ -1,0 +1,80 @@
+html {
+    background: #ffd204;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Amatic sc', cursive;
+}
+
+h1{
+    text-align: center;
+    font-size: 4rem;
+}
+
+.game{
+    width: 600px;
+    height: 400px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+}
+
+.hole{
+    width: 33.3%;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hole:after{
+    background: url(dirt.svg) bottom center no-repeat;
+    background-size: contain ;
+    content: '';
+    height: 70px;
+    width:100%;
+    position: absolute;
+    bottom: -30px;
+}
+
+.mole{
+    background: url(mole.svg) bottom center no-repeat;
+    background-size: 60%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width:100%;
+    height:100%;
+    transition: all 0.5s;
+}
+.container-game{
+    text-align: center;
+}
+.container-game button{
+    padding: 10px;
+    font-weight:bold ;
+}
+
+.dead-mole .mole{
+    background: url(dmole.svg) bottom center no-repeat;
+    background-color: red;
+    background-size: 60%;
+}
+
+.container{
+    text-align: center;
+}
+.start-play{
+    margin-top: 30vh;
+}
+
+.container button {
+    padding: 10px;
+    font-weight:bold ;
+}
+
+
+.hole.up .mole{
+    top: 0;
+}

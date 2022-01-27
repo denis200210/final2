@@ -15,7 +15,7 @@ html, body {
 }
 
 body {
-    background: url(../img/background.jpg) no-repeat;
+    background:  no-repeat;
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
@@ -75,30 +75,8 @@ body {
     transition: all 0.8s, 
                 border-radius 0.8s 0.5s;
 }
-#info-container {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-    padding: 0 20%;
-    z-index: 0;
-    background-color: transparent;
-    color: #fff;
-    opacity: 0;
-    transition: all 0.2s;
-    z-index: -1;
-}
 
-h1 {
-    font-size: 2.5vw;
-}
 
-h2 {
-    font-size: 1.5vw;
-}
 
 #info-container.expand {
     z-index: 2;

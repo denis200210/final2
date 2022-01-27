@@ -1,120 +1,82 @@
-var faucetArray = [[true, true, true, true], [true, true, true, true], [true, true, true, true], [true, true, true, true]];
+const SIZE = 4;
+document.querySelector('.container').style.gridTemplate = `repeat(${SIZE}, 1fr) / repeat(${SIZE}, 1fr)`
 
-window.addEventListener('DOMContentLoaded', initialisation());
+function createGrid() {
+    let grid = document.querySelector('.container');
 
-function initialisation() {
-    document.getElementsByClassName('start-button')[0].addEventListener('mouseup', function () {
-        startGame();
-    })
+    for (let i = 0; i < SIZE; i++) {
+        for (let j = 0; j < SIZE; j++) {
+            let propeller = document.createElement("div");
+            propeller.classList.add('propeller');
+            propeller.setAttribute("data-col", '' + j);
+            propeller.setAttribute("data-row", '' + i);
 
-    document.getElementsByClassName('start-button')[1].addEventListener('mouseup', function () {
-        startGame();
-    })
-
-    document.getElementById('game-field').addEventListener('mouseup', function (event) {
-        if (event.target.id != "game-field") {
-            turnRule(event.target.getAttribute('row') - 1, event.target.getAttribute('column') - 1);
-        }
-    });
-}
-
-function turnRule(row, column) {
-    let gameField = document.getElementById('game-field');
-
-    console.log('Column: ', column, ' Row: ', row);
-
-    for (let i = 0; i < 4; i++) {
-        faucetArray[row][i] = !faucetArray[row][i];
-        turnFaucet(gameField.children[row * 4 + i]);
-        faucetArray[i][column] = !faucetArray[i][column];
-        turnFaucet(gameField.children[i * 4 + column]);
-    }
-    faucetArray[row][column] = !faucetArray[row][column];
-    checkWin();
-}
-
-function turnFaucet(target) {
-    let angle = getRotationAngle(target);
-
-    if (angle % 90 == 0) {
-        target.animate([
-            { transform: 'rotate(' + angle + 'deg)' },
-            { transform: 'rotate(' + (angle + 90) + 'deg)' }
-        ], 200).addEventListener('finish', function () {
-            target.style.transform = 'rotate(' + (angle + 90) + 'deg)';
-        })
-    }
-}
-
-function getRotationAngle(target) {
-    const obj = window.getComputedStyle(target, null);
-    const matrix = obj.getPropertyValue('-webkit-transform') ||
-        obj.getPropertyValue('-moz-transform') ||
-        obj.getPropertyValue('-ms-transform') ||
-        obj.getPropertyValue('-o-transform') ||
-        obj.getPropertyValue('transform');
-
-    let angle = 0;
-
-    if (matrix !== 'none') {
-        const values = matrix.split('(')[1].split(')')[0].split(',');
-        const a = values[0];
-        const b = values[1];
-        angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
-    }
-
-    return ((angle < 0) ? angle += 360 : angle);
-}
-
-function shuffle() {
-    for (let i = 0; i < Math.round(Math.random() * Math.floor(20) + 10); i++) {
-        let row = Math.round(Math.random() * Math.floor(3));
-        let column = Math.round(Math.random() * Math.floor(3));
-
-        for (let j = 0; j < 4; j++) {
-            faucetArray[row][j] = !faucetArray[row][j];
-            faucetArray[j][column] = !faucetArray[j][column];
-        }
-    }
-
-    console.log(faucetArray);
-}
-
-function setFaucetsPosition() {
-    let gameField = document.getElementById('game-field');
-
-    for (let i = 0; i < 4; i++) {
-        for (let j = 0; j < 4; j++) {
-            gameField.children[i * 4 + j].style.transform = faucetArray[i][j] ? 'rotate(90deg)' : 'rotate(0deg)';
+            if (Math.floor(Math.random() * 2) === 1) {
+                propeller.classList.add('horizontal');
+            } else {
+                propeller.classList.add('vertical');
+            }
+            grid.appendChild(propeller);
         }
     }
 }
 
-function checkWin() {
-    let arraySumm = 0;
-    for (let i = 0; i < 4; i++) {
-        for (let j = 0; j < 4; j++) {
-            arraySumm += faucetArray[i][j];
+// поворот вентилей
+window.addEventListener("click", (e) => {
+    let target = e.target;
+    if (target.className === 'propeller horizontal' || e.target.className === 'propeller vertical') {
+        let row = target.getAttribute('data-row');
+        let col = target.getAttribute('data-col');
+
+        for (let i = 0; i < SIZE; i++)  {
+            rotate(document.querySelector('[data-col="' + i + '"][data-row="' + row + '"]'));
+        }
+
+        for (let j = 0; j < SIZE; j++) {
+            rotate(document.querySelector('[data-col="' + col + '"][data-row="' + j + '"]'));
+        }
+
+        rotate(target);
+
+        // конец игры
+        if (document.querySelectorAll('.horizontal').length === 0 || document.querySelectorAll('.vertical').length === 0) {
+            setTimeout(() => {
+                let arr = document.querySelectorAll('.propeller');
+                for (let i = 0; i < 16; i++) {
+                    arr[i].style.setProperty("transform", "translatex(calc(100vw - 150px)");
+                }
+                setTimeout(() => {
+                    document.querySelector(".container").innerHTML = '';
+                    let propeller = document.createElement("div");
+                    propeller.classList.add('restartPropeller');
+                    propeller.classList.add('foreverPropeller');
+
+                    let button = document.createElement("button");
+                    button.textContent = "restart";
+
+                    button.onclick = restart;
+                    document.querySelector('.container').appendChild(propeller);
+                    document.querySelector('.container').appendChild(button);
+                }, 500);
+            }, 500);
         }
     }
+}, false)
 
-    console.log(arraySumm);
+function restart () {
+    const clear = document.querySelector(".container");
+    clear.innerHTML = '';
+    createGrid();
+}
 
-    if (arraySumm == 16) {
-        endGame();
+function rotate(element) {
+    if (element.className === 'propeller horizontal') {
+        element.classList.remove('horizontal');
+        element.classList.add('vertical');
+    } else {
+        element.classList.remove('vertical');
+        element.classList.add('horizontal');
     }
 }
 
-function startGame() {
-    document.getElementById('game-field').classList.remove('hide');
-    document.getElementById('start-info').style.display = 'none';
-    document.getElementById('end-info').style.display = 'none';
-
-    shuffle();
-    setFaucetsPosition();
-}
-
-function endGame() {
-    document.getElementById('game-field').classList.add('hide');
-    document.getElementById('end-info').style.display = 'block';
-}
+createGrid();

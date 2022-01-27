@@ -1,48 +1,47 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="img/ico.png">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="src/style.css">
-    <title>Whack a Mole</title>
+    <title>Title</title>
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <div id="game-info">
-        <h1>Добро пожаловать в игру "Убей крота"</h2>
-        <h2>Твоя задача за 20 секунд убить как можно больше кротов.</h2>
-        <h2>Если ты готов, нажимай кнопку "Старт" и мочи кротов!</h2>
-        <button class="start-button">СТАРТ</button>
-    </div>
+<h1>Whac a mole! <span class="score">0</span></h1>
+<div class="container-game">
+    <h2 class="time">00:00</h2>
+    <button class="start-game"> START </button>
+    <button class="exit"> EXIT </button>
+</div>
 
-    <div id="game-end">
-        <h1></h1>
-        <h2></h2>
-        <button class="start-button">ИГРАТЬ СНОВА</button>
+<div class="game">
+        <div class="hole hole1">
+            <div class="mole"></div>
+        </div>
+        <div class="hole hole1">
+            <div class="mole"></div>
+        </div>
+        <div class="hole hole1">
+            <div class="mole"></div>
+        </div>
+        <div class="hole hole1">
+            <div class="mole"></div>
+        </div>
+    <div class="hole hole1">
+        <div class="mole"></div>
     </div>
-
-    <div id="score">
-        <span>Счет: 0</span>
+    <div class="hole hole1">
+        <div class="mole"></div>
     </div>
-
-    <div id="game-field">
-        <img src="img/mole.png" draggable="false" id="m1" class="mole-img" style="grid-area: m1;">
-        <img src="img/mole.png" draggable="false" id="m2" class="mole-img" style="grid-area: m2;">
-        <img src="img/mole.png" draggable="false" id="m3" class="mole-img" style="grid-area: m3;">
-        <img src="img/mole.png" draggable="false" id="m4" class="mole-img" style="grid-area: m4;">
-        <img src="img/mole.png" draggable="false" id="m5" class="mole-img" style="grid-area: m5;">
-        <img src="img/mole.png" draggable="false" id="m6" class="mole-img" style="grid-area: m6;">
-        <img src="img/mole.png" draggable="false" id="m7" class="mole-img" style="grid-area: m7;">
-        <img src="img/mole.png" draggable="false" id="m8" class="mole-img" style="grid-area: m8;">
-        <img src="img/mole.png" draggable="false" id="m9" class="mole-img" style="grid-area: m9;">
+        <div class="hole hole1">
+            <div class="mole"></div>
+        </div>
+        <div class="hole hole1">
+            <div class="mole"></div>
+        </div>
+        <div class="hole hole1">
+            <div class="mole"></div>
+        </div>
     </div>
-
-    <div id="timer">
-        <div id="progress"></div>
-        <span>Времени осталось: 20 секунд</span>
-    </div>
-    
-    <script src="src/script.js"></script>
+<script src="main.js"></script>
 </body>
 </html>
